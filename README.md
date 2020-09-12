@@ -10,18 +10,18 @@ The linter checks that imports have a correct order.
 Example of good order:
 
 ```go
-	import (
-        // Standart imports.
-        "fmt"
-        "error"
-    
-        // Current imports.
-        "github.com/hedhyw/go-import-lint/internal/model"
-        "github.com/hedhyw/go-import-lint/internal/model"
+import (
+    // Standart imports.
+    "fmt"
+    "error"
 
-        // External imports.
-		"github.com/hedhyw/jsonscjson"
-	)
+    // Current imports.
+    "github.com/hedhyw/go-import-lint/internal/model"
+    "github.com/hedhyw/go-import-lint/internal/model"
+
+    // External imports.
+    "github.com/hedhyw/jsonscjson"
+)
 ```
 
 ## TODO:
