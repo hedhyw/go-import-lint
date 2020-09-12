@@ -34,15 +34,18 @@ import (
 Current tasks:
 - [x] Minimal application.
 - [x] Check blank lines between imports.
-- [ ] Discover files.
+- [x] Discover files.
 - [x] Support comments.
 - [ ] Look at integration with other linters.
 - [ ] Check linter order.
 - [ ] Get package from **go.mod** if possible.
 - [ ] Ignore generated files.
+- [ ] Ignore vendor.
 - [ ] 😠 Nolint comment.
-- [ ] Run `go-import-lint` for this repository.
-- [ ] Parse readme program in test.
+- [x] Run `go-import-lint` for this repository.
+- [x] Parse readme program in test.
+- [ ] Documentate.
+- [ ] Increase test coverage.
 
 ## Installing:
 
@@ -54,4 +57,4 @@ go get github.com/hedhyw/go-import-lint
 
 Run:
 
-`go-import-lint -file FILE -pkg PACKAGE_URL`
+`go-import-lint -path ./... -pkg PACKAGE_URL`

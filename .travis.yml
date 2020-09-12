@@ -14,5 +14,6 @@ before_install:
 
 script:
 - make lint
+- make run
 - make test.coverage
 - $GOPATH/bin/goveralls -service=travis-ci -repotoken $COVERALLS_TOKEN

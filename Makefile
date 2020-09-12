@@ -1,18 +1,19 @@
-FILE ?= ./cmd/go-import-lint/main.go
-PKG ?= 
+RUN_PATH ?= ./...
+RUN_PKG ?= github.com/hedhyw/go-import-lint
 
 OUTBIN ?= ./bin/go-import-lint
 
+MAIN := ./cmd/go-import-lint
 PRE_COMMIT_HOOK := ./.git/hooks/pre-commit
 
 all: lint test hooks build
 
 build:
-	@go build -o ${OUTBIN} ./cmd/go-import-lint
+	@go build -o ${OUTBIN} ${MAIN}
 .PHONY: build
 
 run: build
-	@${OUTBIN} -file "${FILE}" -pkg "${PKG}"
+	@${OUTBIN} -path $(RUN_PATH) -pkg "${RUN_PKG}"
 .PHONY: run
 
 hooks:
