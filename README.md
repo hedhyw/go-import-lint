@@ -9,8 +9,8 @@ The linter checks that imports have a correct order.
 
 Example of good order:
 
+<!-- ReadmeExample -->
 ```go
-/* <ReadmeExample> */
 package main
 
 import (
@@ -25,8 +25,8 @@ import (
     // External imports.
     "github.com/hedhyw/jsonscjson"
 )
-/* </ReadmeExample> */
 ```
+<!-- /ReadmeExample -->
 
 ## TODO:
 **Currently the work in progress.**

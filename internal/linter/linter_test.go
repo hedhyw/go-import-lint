@@ -159,8 +159,8 @@ func TestReadmeExample(t *testing.T) {
 	const (
 		readmeFile = "../../README.md"
 
-		programBegin = "/* <ReadmeExample> */"
-		programEnd   = "/* </ReadmeExample> */"
+		programBegin = "<!-- ReadmeExample -->\n```go"
+		programEnd   = "```\n<!-- /ReadmeExample -->"
 	)
 
 	var f, err = os.Open(readmeFile)
