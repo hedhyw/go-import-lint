@@ -1,0 +1,1 @@
+# go-import-lint
