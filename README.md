@@ -10,30 +10,39 @@ The linter checks that imports have a correct order.
 Example of good order:
 
 ```go
+/* <ReadmeExample> */
+package main
+
 import (
     // Standart imports.
     "fmt"
     "error"
 
     // Current imports.
-    "github.com/hedhyw/go-import-lint/internal/model"
+    "github.com/hedhyw/go-import-lint/internal"
     "github.com/hedhyw/go-import-lint/internal/model"
 
     // External imports.
     "github.com/hedhyw/jsonscjson"
 )
+/* </ReadmeExample> */
 ```
 
 ## TODO:
-**Currently the work in progres.**
+**Currently the work in progress.**
 
 Current tasks:
 - [x] Minimal application.
 - [x] Check blank lines between imports.
 - [ ] Discover files.
-- [ ] Support comments.
+- [x] Support comments.
 - [ ] Look at integration with other linters.
 - [ ] Check linter order.
+- [ ] Get package from **go.mod** if possible.
+- [ ] Ignore generated files.
+- [ ] 😠 Nolint comment.
+- [ ] Run `go-import-lint` for this repository.
+- [ ] Parse readme program in test.
 
 ## Installing:
 

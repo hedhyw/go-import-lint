@@ -16,14 +16,15 @@ func (err importOrderError) Error() string {
 	return fmt.Sprintf("%s: %s: %s", err.Position, err.Value, err.Reason)
 }
 
-func NewImportOrderError(el ImportElem, reason Reason) error {
-	var value, err = strconv.Unquote(el.Value)
+// NewImportOrderError creates new error about invalid import order.
+func NewImportOrderError(n Node, reason Reason) error {
+	var value, err = strconv.Unquote(n.Value)
 	if err != nil {
-		value = el.Value
+		value = n.Value
 	}
 
 	return importOrderError{
-		Position: el.Position,
+		Position: n.Position,
 		Reason:   reason,
 		Value:    value,
 	}

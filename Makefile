@@ -25,7 +25,7 @@ lint: bin/golangci-lint
 .PHONY: lint
 
 test.coverage:
-	go test -v -covermode=count -coverprofile=coverage.out
+	go test -v -covermode=count -coverprofile=coverage.out ./...
 .PHONY: test.coverage
 
 test:

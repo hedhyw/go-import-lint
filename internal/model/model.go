@@ -6,49 +6,70 @@ import (
 	"strings"
 )
 
-// ImportElem
-type ImportElem struct {
-	Kind     importKind
+// Node describes a unit from the program.
+type Node struct {
+	Kind     nodeKind
 	Position token.Position
-	Spec     *ast.ImportSpec
 	Value    string
+	// Offset out of comments.
+	Offset int
 }
 
-// NewImportElem creates ImportElem.
-func NewImportElem(
+// Index returns a line number subtracting offset.
+func (n Node) Index() int {
+	return n.Position.Line - n.Offset
+}
+
+// NewImportNode creates new Node for comment entity.
+func NewCommentNode(
+	fset *token.FileSet,
+	pos token.Pos,
+) (n Node) {
+	var position = fset.Position(pos)
+	return Node{
+		Kind:     KindComment,
+		Value:    "",
+		Position: position,
+		Offset:   0,
+	}
+}
+
+// NewImportNode creates new Node for import entity.
+func NewImportNode(
 	fset *token.FileSet,
 	spec *ast.ImportSpec,
 	pkg string,
-) (el ImportElem) {
-	var kind importKind
+) (n Node) {
+	var kind nodeKind
 	switch {
 	case spec == nil, spec.Path == nil:
-		return ImportElem{
-			Kind: kindImportUnknown,
+		return Node{
+			Kind: KindImportUnknown,
 		}
 	case !strings.Contains(spec.Path.Value, "."):
-		kind = kindImportSTD
+		kind = KindImportSTD
 	case strings.Contains(spec.Path.Value, pkg):
 		kind = KindImportInternal
 	default:
-		kind = kindImportVendor
+		kind = KindImportVendor
 	}
 
 	var position = fset.Position(spec.Pos())
 
-	return ImportElem{
+	return Node{
 		Kind:     kind,
-		Position: position,
-		Spec:     spec,
 		Value:    spec.Path.Value,
+		Position: position,
+		Offset:   0,
 	}
 }
 
-type importKind uint8
+type nodeKind uint8
 
 const (
-	kindImportUnknown importKind = iota
-	kindImportSTD
+	KindImportUnknown nodeKind = iota
+	KindImportSTD
 	KindImportInternal
-	kindImportVendor
+	KindImportVendor
+	KindComment
 )

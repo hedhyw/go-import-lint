@@ -18,7 +18,7 @@ func main() {
 	flag.Parse()
 
 	var fset = token.NewFileSet()
-	var f, err = parser.ParseFile(fset, *file, nil, 0)
+	var f, err = parser.ParseFile(fset, *file, nil, linter.ParserMode)
 	if err != nil {
 		fmt.Printf("cannot parse file: %s", err)
 		os.Exit(1)
