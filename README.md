@@ -31,16 +31,15 @@ import (
 ## Features:
 
 - [x] Checking the blank lines between standart, package and external imports.
-- [x] Files discovering and skipping.
+- [x] Files discovering.
 - [x] Support import aliases.
 - [x] Getting package name from the **go.mod**.
-- [x] Ignoring vendor.
-- [x] Ignoring generated files.
+- [x] Ignore vendor by default.
+- [x] Ignore generated files.
 - [x] Support comments offset.
 - [x] 😠 Nolint comment `// nolint:go-import-lint`.
-- [ ] Checking imports order.
-- [ ] Integration with other linters.
-- [ ] Linters output standarts.
+- [ ] Check imports arrange.
+- [ ] Integrate with `golangci-lint`.
 
 ## Installing:
 

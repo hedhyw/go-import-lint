@@ -27,8 +27,7 @@ func TestGoModScannerGoModNotFound(t *testing.T) {
 	}
 }
 
-func TestGoModScan(t *testing.T) {
-
+func TestGoModScanForModule(t *testing.T) {
 	const content = `
 module github.com/hedhyw/go-import-lint
 
@@ -44,7 +43,7 @@ go 1.14
 	}
 }
 
-func TestGoModScanInvalid(t *testing.T) {
+func TestGoModScanForModuleInvalid(t *testing.T) {
 	t.Run("invalid", func(tt *testing.T) {
 		testScanUnknown(tt, `
 MODULE github.com/hedhyw/go-import-lint
