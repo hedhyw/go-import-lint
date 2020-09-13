@@ -29,7 +29,11 @@ func TestStringsFlag(t *testing.T) {
 
 func TestMain(t *testing.T) {
 	var flags = newFlags()
-	flags.Paths.Set("../../...")
+
+	var err = flags.Paths.Set("../../...")
+	if err != nil {
+		t.Fatalf("err: %s", err)
+	}
 
 	var code = run(flags)
 	if code != 0 {
