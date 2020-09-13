@@ -174,7 +174,7 @@ func TestIgnoreGeneratedFiles(t *testing.T) {
 
 func TestIgnoreNoLintFiles(t *testing.T) {
 	var program = `
-	//nolint:go-import-lint
+	// nolint:go-import-lint
 	package linter
 
 	import (

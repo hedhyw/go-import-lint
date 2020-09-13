@@ -55,7 +55,6 @@ func (p packager) Package(paths []string) (pkg string, err error) {
 }
 
 func readPackageFromGoMod(file string) (pkg string, err error) {
-
 	var f *os.File
 	f, err = os.Open(file)
 	if err != nil {

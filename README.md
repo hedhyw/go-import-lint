@@ -37,7 +37,7 @@ import (
 - [x] Ignoring vendor.
 - [x] Ignoring generated files.
 - [x] Supporting comments offset.
-- [x] 😠 Nolint comment.
+- [x] 😠 Nolint comment `// nolint:go-import-lint`.
 - [ ] Checking imports order.
 - [ ] Integration with other linters.
 - [ ] Linters output standarts.
