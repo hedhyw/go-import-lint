@@ -26,3 +26,13 @@ func TestStringsFlag(t *testing.T) {
 		t.Fatalf("values: exp %+v, got %+v", expValues, f.values)
 	}
 }
+
+func TestMain(t *testing.T) {
+	var flags = newFlags()
+	flags.Paths.Set("../../...")
+
+	var code = run(flags)
+	if code != 0 {
+		t.Fatalf("code: exp 0, got: %d", code)
+	}
+}

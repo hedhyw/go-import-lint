@@ -58,12 +58,16 @@ func main() {
 	var flagArgs = newFlags()
 	flag.Parse()
 
+	os.Exit(run(flagArgs))
+}
+
+func run(flagArgs *flags) (code int) {
 	var fset = token.NewFileSet()
 
 	var walker, err = walker.NewWalker(fset, flagArgs.Exclude.values)
 	if err != nil {
 		fmt.Printf("creating walker: %s\n", err)
-		os.Exit(1)
+		return 1
 	}
 
 	if flagArgs.Package == "" {
@@ -71,22 +75,19 @@ func main() {
 		flagArgs.Package, err = p.Package(flagArgs.Paths.values)
 		if err != nil {
 			fmt.Printf("getting package: %s\n", err)
-			os.Exit(1)
+			return 1
 		}
 	}
 
+	var walkerErr = make(chan error, 1)
 	go func() {
 		defer walker.Close()
 		for _, p := range flagArgs.Paths.values {
-			var werr = walker.Walk(p)
-			if werr != nil {
-				fmt.Printf("walking error: %s\n", werr)
-				os.Exit(1)
-			}
+			walkerErr <- walker.Walk(p)
 		}
 	}()
 
-	var linterGotErr = make(chan bool)
+	var linterGotErr = make(chan bool, 1)
 	go func() {
 		var gotErr bool
 		defer func() { linterGotErr <- gotErr }()
@@ -102,6 +103,13 @@ func main() {
 	}()
 
 	if <-linterGotErr {
-		os.Exit(1)
+		return 1
 	}
+
+	var werr = <-walkerErr
+	if werr != nil {
+		return 1
+	}
+
+	return 0
 }
