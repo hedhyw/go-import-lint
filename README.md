@@ -31,12 +31,12 @@ import (
 ## Features:
 
 - [x] Checking the blank lines between standart, package and external imports.
-- [x] Discovering files.
+- [x] Files discovering and skipping.
 - [x] Support import aliases.
 - [x] Getting package name from the **go.mod**.
 - [x] Ignoring vendor.
 - [x] Ignoring generated files.
-- [x] Supporting comments offset.
+- [x] Support comments offset.
 - [x] 😠 Nolint comment `// nolint:go-import-lint`.
 - [ ] Checking imports order.
 - [ ] Integration with other linters.
