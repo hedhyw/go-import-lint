@@ -2,10 +2,76 @@ package model_test
 
 import (
 	"go/token"
+	"strings"
 	"testing"
 
 	"github.com/hedhyw/go-import-lint/internal/model"
 )
+
+func TestConstError(t *testing.T) {
+	const msg = "test"
+	const err model.Error = msg
+
+	if err.Error() != msg {
+		t.Fatalf("err: got %s, exp %s", err, msg)
+	}
+}
+
+func TestErrorSet(t *testing.T) {
+	const (
+		firstError  model.Error = "first test error"
+		secondError model.Error = "second test error"
+	)
+
+	t.Run("two", func(t *testing.T) {
+		var err = model.NewErrorSet(firstError, secondError)
+
+		switch {
+		case !strings.Contains(err.Error(), firstError.Error()):
+			t.Fatalf("err: got %s, exp include %s", err.Error(), firstError.Error())
+		case !strings.Contains(err.Error(), secondError.Error()):
+			t.Fatalf("err: got %s, exp include %s", err.Error(), secondError.Error())
+		}
+	})
+
+	t.Run("single", func(t *testing.T) {
+		var err = model.NewErrorSet(firstError)
+
+		if err != firstError {
+			t.Fatalf("err: got %s, exp %s", err, firstError)
+		}
+	})
+
+	t.Run("single_nil", func(t *testing.T) {
+		var err = model.NewErrorSet(firstError, nil)
+
+		if err != firstError {
+			t.Fatalf("err: got %s, exp %s", err, firstError)
+		}
+	})
+
+	t.Run("nil_single", func(t *testing.T) {
+		var err = model.NewErrorSet(nil, secondError)
+
+		if err != secondError {
+			t.Fatalf("err: got %s, exp %s", err, secondError)
+		}
+	})
+
+	t.Run("empty", func(t *testing.T) {
+		var err = model.NewErrorSet()
+		if err != nil {
+			t.Fatalf("err: got %s, exp nil", err)
+		}
+	})
+
+	t.Run("nil", func(t *testing.T) {
+		var err = model.NewErrorSet(nil)
+		if err != nil {
+			t.Fatalf("err: got %s, exp nil", err)
+		}
+	})
+}
 
 func TestNewImportOrderError(t *testing.T) {
 	const expReason = model.ReasonExtraLine

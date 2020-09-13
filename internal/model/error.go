@@ -49,7 +49,9 @@ func NewErrorSet(errs ...error) (err error) {
 	case 1:
 		return actualErrs[0]
 	default:
-		return errorsSet{}
+		return errorsSet{
+			errs: actualErrs,
+		}
 	}
 }
 
