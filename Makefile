@@ -1,5 +1,5 @@
-RUN_PATH ?= ./...
-RUN_PKG ?= github.com/hedhyw/go-import-lint
+RUN_PATH ?= ""
+RUN_PKG ?= ""
 
 OUTBIN ?= ./bin/go-import-lint
 

@@ -1,3 +1,4 @@
+// Package linter contains core logic for the linter.
 package linter
 
 import (

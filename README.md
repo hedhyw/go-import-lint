@@ -28,24 +28,19 @@ import (
 ```
 <!-- /ReadmeExample -->
 
-## TODO:
-**Currently the work in progress.**
+## Features:
 
-Current tasks:
-- [x] Minimal application.
-- [x] Check blank lines between imports.
-- [x] Discover files.
-- [x] Support comments.
-- [ ] Look at integration with other linters.
-- [ ] Check linter order.
-- [ ] Get package from **go.mod** if possible.
-- [ ] Ignore generated files.
-- [ ] Ignore vendor.
-- [ ] 😠 Nolint comment.
-- [x] Run `go-import-lint` for this repository.
-- [x] Parse readme program in test.
-- [ ] Documentate.
-- [ ] Increase test coverage.
+- [x] Checking the blank lines between standart, package and external imports.
+- [x] Discovering files.
+- [x] Support import aliases.
+- [x] Getting package name from the **go.mod**.
+- [x] Ignoring vendor.
+- [x] Ignoring generated files.
+- [x] Supporting comments offset.
+- [x] 😠 Nolint comment.
+- [ ] Checking imports order.
+- [ ] Integration with other linters.
+- [ ] Linters output standarts.
 
 ## Installing:
 
@@ -58,3 +53,13 @@ go get github.com/hedhyw/go-import-lint
 Run:
 
 `go-import-lint -path ./... -pkg PACKAGE_URL`
+
+```
+Usage of go-import-lint:
+  -exclude value
+        paths to exclude (default ./vendor, ./.git)
+  -path value
+        paths to lint (default ./...)
+  -pkg string
+        module package
+```

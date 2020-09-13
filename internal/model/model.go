@@ -1,3 +1,4 @@
+// Model describes basic linter entities.
 package model
 
 import (
@@ -6,9 +7,13 @@ import (
 	"strings"
 )
 
+// SuffixRecursive is a path suffix which enables recursive directories
+// discovering.
+const SuffixRecursive = "..."
+
 // Node describes a unit from the program.
 type Node struct {
-	Kind     nodeKind
+	Kind     NodeKind
 	Position token.Position
 	Value    string
 	// Offset out of comments.
@@ -20,15 +25,15 @@ func (n Node) Index() int {
 	return n.Position.Line - n.Offset
 }
 
-// NewImportNode creates new Node for comment entity.
+// NewCommentNode creates new Node for comment entity.
 func NewCommentNode(
 	fset *token.FileSet,
-	pos token.Pos,
+	comment *ast.Comment,
 ) (n Node) {
-	var position = fset.Position(pos)
+	var position = fset.Position(comment.Pos())
 	return Node{
 		Kind:     KindComment,
-		Value:    "",
+		Value:    comment.Text,
 		Position: position,
 		Offset:   0,
 	}
@@ -40,11 +45,11 @@ func NewImportNode(
 	spec *ast.ImportSpec,
 	pkg string,
 ) (n Node) {
-	var kind nodeKind
+	var kind NodeKind
 	switch {
 	case spec == nil, spec.Path == nil:
 		return Node{
-			Kind: KindImportUnknown,
+			Kind: KindUnknown,
 		}
 	case !strings.Contains(spec.Path.Value, "."):
 		kind = KindImportSTD
@@ -64,12 +69,19 @@ func NewImportNode(
 	}
 }
 
-type nodeKind uint8
+// NodeKind describes a type of the node.
+type NodeKind uint8
 
+// Possible node Kinds.
 const (
-	KindImportUnknown nodeKind = iota
+	// KindUnknown is a undeterminated kind.
+	KindUnknown NodeKind = iota
+	// KindImportSTD is a standart library import kind.
 	KindImportSTD
+	// KindImportInternal is a current package import kind.
 	KindImportInternal
+	// KindImportVendor is a external package import kind.
 	KindImportVendor
+	// KindComment is a regular comment kind.
 	KindComment
 )

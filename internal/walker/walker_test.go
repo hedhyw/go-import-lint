@@ -7,40 +7,66 @@ import (
 	"github.com/hedhyw/go-import-lint/internal/walker"
 )
 
-const testFile = "walker_test"
+const thisFile = "walker_test"
 
 func TestWalker(t *testing.T) {
 	t.Run("current_dir", func(tt *testing.T) {
-		testWalker(tt, ".")
+		testWalkerThisFileFound(tt, ".")
+	})
+
+	t.Run("current_file", func(tt *testing.T) {
+		testWalkerThisFileFound(tt, thisFile+".go")
 	})
 
 	t.Run("parent_recursive", func(tt *testing.T) {
-		testWalker(tt, "../...")
+		testWalkerThisFileFound(tt, "../...")
 	})
 }
 
-func testWalker(t *testing.T, path string) {
-	var fset = token.NewFileSet()
-	var w = walker.NewWalker(fset)
-
-	var err = w.Walk(path)
-	if err != nil {
-		t.Fatalf("err: %s", err)
-	}
-
-	w.Close()
-
-	var gotNames = make(map[string]struct{})
-	for f := range w.Files() {
-		gotNames[f.Name.String()] = struct{}{}
-	}
+func testWalkerThisFileFound(t *testing.T, path string) {
+	var gotNames = getWalkerResult(t, path, nil)
 
 	if len(gotNames) == 0 {
 		t.Fatal("got no names")
 	}
 
-	_, gotWalkerTest := gotNames[testFile]
+	_, gotWalkerTest := gotNames[thisFile]
 	if !gotWalkerTest {
-		t.Fatalf("%s: not found in list: %+v", testFile, gotNames)
+		t.Fatalf("%s: not found in list: %+v", thisFile, gotNames)
 	}
+}
+
+func TestWalkerExclude(t *testing.T) {
+	var gotNames = getWalkerResult(t, "../...", []string{"../walker"})
+
+	if len(gotNames) == 0 {
+		t.Fatal("got no names")
+	}
+
+	_, gotWalkerTest := gotNames[thisFile]
+	if gotWalkerTest {
+		t.Fatalf("%s: found in list: %+v", thisFile, gotNames)
+	}
+}
+
+func getWalkerResult(t *testing.T, path string, exclude []string) (gotNames map[string]struct{}) {
+	var fset = token.NewFileSet()
+
+	var w, err = walker.NewWalker(fset, exclude)
+	if err != nil {
+		t.Fatalf("err: %s", err)
+	}
+
+	if err = w.Walk(path); err != nil {
+		t.Fatalf("err: %s", err)
+	}
+
+	w.Close()
+
+	gotNames = make(map[string]struct{})
+	for f := range w.Files() {
+		gotNames[f.Name.String()] = struct{}{}
+	}
+
+	return gotNames
 }
