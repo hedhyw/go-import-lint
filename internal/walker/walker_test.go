@@ -37,7 +37,17 @@ func testWalkerThisFileFound(t *testing.T, path string) {
 }
 
 func TestWalkerExclude(t *testing.T) {
-	var gotNames = getWalkerResult(t, "../...", []string{"../walker"})
+	t.Run("directory", func(tt *testing.T) {
+		testExcludeThisFile(tt, []string{"../walker"})
+	})
+
+	t.Run("file", func(tt *testing.T) {
+		testExcludeThisFile(tt, []string{thisFile + ".go"})
+	})
+}
+
+func testExcludeThisFile(t *testing.T, exclude []string) {
+	var gotNames = getWalkerResult(t, "../...", exclude)
 
 	if len(gotNames) == 0 {
 		t.Fatal("got no names")
@@ -46,6 +56,33 @@ func TestWalkerExclude(t *testing.T) {
 	_, gotWalkerTest := gotNames[thisFile]
 	if gotWalkerTest {
 		t.Fatalf("%s: found in list: %+v", thisFile, gotNames)
+	}
+}
+
+func TestWalkerIgnoreHandleNoGoFile(t *testing.T) {
+	_ = getWalkerResult(t, "../../go.mod", nil)
+}
+
+func TestWalkerErrors(t *testing.T) {
+	t.Run("file-not-found", func(tt *testing.T) {
+		testWalkerError(tt, "not-found.go")
+	})
+
+	t.Run("dir-not-found", func(tt *testing.T) {
+		testWalkerError(tt, ".../...")
+	})
+}
+
+func testWalkerError(t *testing.T, path string) {
+	var fset = token.NewFileSet()
+
+	var w, err = walker.NewWalker(fset, []string{})
+	if err != nil {
+		t.Fatalf("err: %s", err)
+	}
+
+	if err = w.Walk(path); err == nil {
+		t.Fatalf("err: exp not exist, got %s", err)
 	}
 }
 

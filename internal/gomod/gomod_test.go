@@ -19,6 +19,14 @@ func TestGoModScanner(t *testing.T) {
 	}
 }
 
+func TestGoModScannerGoModNotFound(t *testing.T) {
+	var p = NewPackager()
+	var _, err = p.Package(nil)
+	if !errors.Is(err, errPackageUnknown) {
+		t.Fatalf("err: exp %s, got: %s", errPackageUnknown, err)
+	}
+}
+
 func TestGoModScan(t *testing.T) {
 
 	const content = `
