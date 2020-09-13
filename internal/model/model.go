@@ -1,4 +1,4 @@
-// Model describes basic linter entities.
+// Package model describes basic linter entities.
 package model
 
 import (
