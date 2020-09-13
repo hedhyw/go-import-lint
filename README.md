@@ -5,9 +5,12 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/hedhyw/go-import-lint)](https://goreportcard.com/report/github.com/hedhyw/go-import-lint)
 [![Coverage Status](https://coveralls.io/repos/github/hedhyw/go-import-lint/badge.svg?branch=master)](https://coveralls.io/github/hedhyw/go-import-lint?branch=master)
 
-The linter checks that imports have a correct order.
+Golang source code analyzer that checks imports order. It verifies that:
+- standard, current package, and vendor imports are separated by a line;
+- there are no blank lines between one import group;
+- there are no more than two lines.
 
-Example of good order:
+Example of good imports order:
 
 <!-- ReadmeExample -->
 ```go
@@ -18,12 +21,13 @@ import (
     "fmt"
     "error"
 
-    // Current imports.
-    "github.com/hedhyw/go-import-lint/internal"
+    // Current package imports.
+    "github.com/hedhyw/go-import-lint/internal/linter"
     "github.com/hedhyw/go-import-lint/internal/model"
 
     // External imports.
     "github.com/hedhyw/jsonscjson"
+    "github.com/stretchr/testify/assert"
 )
 ```
 <!-- /ReadmeExample -->
