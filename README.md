@@ -48,14 +48,14 @@ import (
 ## Installing:
 
 ```sh
-go get github.com/hedhyw/go-import-lint
+go get github.com/hedhyw/go-import-lint/cmd/go-import-lint
 ```
 
 ## Usage example:
 
 Run:
 
-`go-import-lint -path ./... -pkg PACKAGE_URL`
+`go-import-lint`
 
 ```
 Usage of go-import-lint:
