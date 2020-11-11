@@ -283,3 +283,26 @@ func assertReasonErrs(t *testing.T, got []error, exp map[model.Reason]int) {
 		t.Fatalf("exp: %+v got: %+v", exp, reasons)
 	}
 }
+
+func TestValidUnusedImports(t *testing.T) {
+	var program = `
+	package linter
+
+	import (
+		"fmt"
+	
+		"github.com/hedhyw/go-import-lint/internal/model"
+
+		"github.com/hedhyw/jsonscjson"
+
+		// This is a driver for SQL.
+		_ "github.com/lib/pq"
+		// This is an unused library.
+		_ "github.com/lib/unused"
+	)
+	`
+
+	var l = linter.NewLinter(testPkg)
+	var errs = l.Lint(mustParseProgram(t, program))
+	assertReasonErrs(t, errs, map[model.Reason]int{})
+}
