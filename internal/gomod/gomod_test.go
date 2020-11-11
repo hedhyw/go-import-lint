@@ -31,7 +31,7 @@ func TestGoModScanForModule(t *testing.T) {
 	const content = `
 module github.com/hedhyw/go-import-lint
 
-go 1.14
+go 1.15
 	`
 
 	var gotPkg, err = scanForModule(strings.NewReader(content))
@@ -48,12 +48,12 @@ func TestGoModScanForModuleInvalid(t *testing.T) {
 		testScanUnknown(tt, `
 MODULE github.com/hedhyw/go-import-lint
 
-go 1.14
+go 1.15
 		`)
 	})
 
 	t.Run("not found", func(tt *testing.T) {
-		testScanUnknown(tt, `go 1.14`)
+		testScanUnknown(tt, `go 1.15`)
 	})
 }
 
