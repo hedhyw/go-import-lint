@@ -51,6 +51,8 @@ func NewImportNode(
 		return Node{
 			Kind: KindUnknown,
 		}
+	case spec.Name != nil && spec.Name.Name == "_":
+		kind = KindImportUnused
 	case !strings.Contains(spec.Path.Value, "."):
 		kind = KindImportSTD
 	case strings.Contains(spec.Path.Value, pkg):
@@ -84,4 +86,6 @@ const (
 	KindImportVendor
 	// KindComment is a regular comment kind.
 	KindComment
+	// KindImportUnused is an unused package. For example SQL driver.
+	KindImportUnused
 )

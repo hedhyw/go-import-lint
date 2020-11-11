@@ -28,6 +28,9 @@ import (
     // External imports.
     "github.com/hedhyw/jsonscjson"
     "github.com/stretchr/testify/assert"
+
+    // Unused imports.
+    _ "github.com/lib/pq"
 )
 ```
 <!-- /ReadmeExample -->
