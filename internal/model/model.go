@@ -55,7 +55,7 @@ func NewImportNode(
 		kind = KindImportUnused
 	case !strings.Contains(spec.Path.Value, "."):
 		kind = KindImportSTD
-	case strings.Contains(spec.Path.Value, pkg):
+	case strings.Contains(spec.Path.Value, pkg+"/"), pkg == spec.Path.Value:
 		kind = KindImportInternal
 	default:
 		kind = KindImportVendor
