@@ -7,7 +7,7 @@ import (
 	"go/ast"
 	"go/parser"
 	"go/token"
-	"io/ioutil"
+	"io/fs"
 	"os"
 	"path/filepath"
 	"strings"
@@ -123,8 +123,8 @@ func (w walker) handleDir(path string) (err error) {
 		return nil
 	}
 
-	var files []os.FileInfo
-	files, err = ioutil.ReadDir(path)
+	var files []fs.DirEntry
+	files, err = os.ReadDir(path)
 	if err != nil {
 		return fmt.Errorf("reading dir: %w", err)
 	}
