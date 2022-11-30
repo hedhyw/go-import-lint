@@ -51,7 +51,7 @@ import (
 ## Installing:
 
 ```sh
-go get github.com/hedhyw/go-import-lint/cmd/go-import-lint
+go install github.com/hedhyw/go-import-lint/cmd/go-import-lint@latest
 ```
 
 ## Usage example:
