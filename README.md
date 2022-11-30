@@ -16,6 +16,9 @@ Example of good imports order:
 ```go
 package main
 
+// CGo import.
+import "C"
+
 import (
     // Standart imports.
     "fmt"
@@ -35,26 +38,15 @@ import (
 ```
 <!-- /ReadmeExample -->
 
-## Features:
+## Installation
 
-- [x] Checking the blank lines between standart, package and external imports.
-- [x] Files discovering.
-- [x] Support import aliases.
-- [x] Getting package name from the **go.mod**.
-- [x] Ignore vendor by default.
-- [x] Ignore generated files.
-- [x] Support comments offset.
-- [x] 😠 Nolint comment `// nolint:go-import-lint`.
-- [ ] Check imports arrange.
-- [ ] Integrate with `golangci-lint`.
-
-## Installing:
+### Go
 
 ```sh
 go install github.com/hedhyw/go-import-lint/cmd/go-import-lint@latest
 ```
 
-## Usage example:
+## Usage example
 
 Run:
 

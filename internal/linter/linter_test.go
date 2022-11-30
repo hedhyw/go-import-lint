@@ -346,6 +346,42 @@ func TestImportC(t *testing.T) {
 		assertReasonErrs(t, errs, map[model.Reason]int{})
 	})
 
+	t.Run("multiple_after", func(t *testing.T) {
+		t.Parallel()
+
+		const program = `
+		package linter
+		
+		import (
+			"errors"
+			"fmt"
+		)
+
+		import "C"
+		`
+
+		errs := linter.Lint(mustParseProgram(t, program))
+		assertReasonErrs(t, errs, map[model.Reason]int{})
+	})
+
+	t.Run("multiple_before", func(t *testing.T) {
+		t.Parallel()
+
+		const program = `
+		package linter
+
+		import "C"
+
+		import (
+			"errors"
+			"fmt"
+		)
+		`
+
+		errs := linter.Lint(mustParseProgram(t, program))
+		assertReasonErrs(t, errs, map[model.Reason]int{})
+	})
+
 	t.Run("error", func(t *testing.T) {
 		t.Parallel()
 
