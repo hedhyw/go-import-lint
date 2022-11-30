@@ -24,7 +24,7 @@ func TestErrorSet(t *testing.T) {
 	)
 
 	t.Run("two", func(tt *testing.T) {
-		var err = model.NewErrorSet(firstError, secondError)
+		err := model.NewErrorSet(firstError, secondError)
 
 		switch {
 		case !strings.Contains(err.Error(), firstError.Error()):
@@ -35,7 +35,7 @@ func TestErrorSet(t *testing.T) {
 	})
 
 	t.Run("single", func(tt *testing.T) {
-		var err = model.NewErrorSet(firstError)
+		err := model.NewErrorSet(firstError)
 
 		if err != firstError {
 			tt.Fatalf("err: got %s, exp %s", err, firstError)
@@ -43,7 +43,7 @@ func TestErrorSet(t *testing.T) {
 	})
 
 	t.Run("single_nil", func(tt *testing.T) {
-		var err = model.NewErrorSet(firstError, nil)
+		err := model.NewErrorSet(firstError, nil)
 
 		if err != firstError {
 			tt.Fatalf("err: got %s, exp %s", err, firstError)
@@ -51,7 +51,7 @@ func TestErrorSet(t *testing.T) {
 	})
 
 	t.Run("nil_single", func(tt *testing.T) {
-		var err = model.NewErrorSet(nil, secondError)
+		err := model.NewErrorSet(nil, secondError)
 
 		if err != secondError {
 			tt.Fatalf("err: got %s, exp %s", err, secondError)
@@ -59,7 +59,7 @@ func TestErrorSet(t *testing.T) {
 	})
 
 	t.Run("empty", func(tt *testing.T) {
-		var err = model.NewErrorSet()
+		err := model.NewErrorSet()
 
 		if err != nil {
 			tt.Fatalf("err: got %s, exp nil", err)
@@ -67,7 +67,7 @@ func TestErrorSet(t *testing.T) {
 	})
 
 	t.Run("nil", func(tt *testing.T) {
-		var err = model.NewErrorSet(nil)
+		err := model.NewErrorSet(nil)
 
 		if err != nil {
 			tt.Fatalf("err: got %s, exp nil", err)
@@ -77,14 +77,14 @@ func TestErrorSet(t *testing.T) {
 
 func TestNewImportOrderError(t *testing.T) {
 	const expReason = model.ReasonExtraLine
-	var err = model.NewImportOrderError(model.Node{
+	err := model.NewImportOrderError(model.Node{
 		Kind:     model.KindImportInternal,
 		Offset:   0,
 		Position: token.Position{},
 		Value:    "go/token",
 	}, expReason)
 
-	var gotReason = model.ReasonFromError(err)
+	gotReason := model.ReasonFromError(err)
 	if expReason != gotReason {
 		t.Fatalf("reason: got %s, exp %s", gotReason, expReason)
 	}

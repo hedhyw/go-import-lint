@@ -21,8 +21,7 @@ type Packager interface {
 	Package(paths []string) (pkg string, ok bool)
 }
 
-type packager struct {
-}
+type packager struct{}
 
 // NewPackager creates new packager.
 func NewPackager() packager {
@@ -69,9 +68,9 @@ func readPackageFromGoMod(file string) (pkg string, err error) {
 func scanForModule(r io.Reader) (pkg string, err error) {
 	const prefixModule = "module "
 
-	var s = bufio.NewScanner(r)
+	s := bufio.NewScanner(r)
 	for s.Scan() {
-		var data = s.Text()
+		data := s.Text()
 		if !strings.HasPrefix(data, prefixModule) {
 			continue
 		}

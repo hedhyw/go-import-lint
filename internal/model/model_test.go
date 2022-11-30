@@ -13,11 +13,11 @@ import (
 const pkg = "github.com/hedhyw/go-import-lint"
 
 func TestNewCommentNode(t *testing.T) {
-	var gotNode = model.NewCommentNode(token.NewFileSet(), &ast.Comment{
+	gotNode := model.NewCommentNode(token.NewFileSet(), &ast.Comment{
 		Slash: token.NoPos,
 		Text:  "test",
 	})
-	var expNode = model.Node{
+	expNode := model.Node{
 		Kind:   model.KindComment,
 		Offset: 0,
 		Position: token.Position{
@@ -55,7 +55,7 @@ func testImportNodeKinds(
 ) {
 	expValue = strconv.Quote(expValue)
 
-	var n = model.NewImportNode(token.NewFileSet(), &ast.ImportSpec{
+	n := model.NewImportNode(token.NewFileSet(), &ast.ImportSpec{
 		Path: &ast.BasicLit{
 			Value: expValue,
 		},
@@ -70,7 +70,7 @@ func testImportNodeKinds(
 }
 
 func TestUnknownImportKind(t *testing.T) {
-	var n = model.NewImportNode(token.NewFileSet(), &ast.ImportSpec{
+	n := model.NewImportNode(token.NewFileSet(), &ast.ImportSpec{
 		Path: nil,
 	}, pkg)
 
@@ -88,7 +88,7 @@ func TestUnknownImportKind(t *testing.T) {
 func TestNodeIndex(t *testing.T) {
 	const expIndex = 1
 
-	var n = model.Node{
+	n := model.Node{
 		Offset: 1,
 		Position: token.Position{
 			Line: 2,

@@ -24,7 +24,7 @@ func TestWalker(t *testing.T) {
 }
 
 func testWalkerThisFileFound(t *testing.T, path string) {
-	var gotNames = getWalkerResult(t, path, nil)
+	gotNames := getWalkerResult(t, path, nil)
 
 	if len(gotNames) == 0 {
 		t.Fatal("got no names")
@@ -47,7 +47,7 @@ func TestWalkerExclude(t *testing.T) {
 }
 
 func testExcludeThisFile(t *testing.T, exclude []string) {
-	var gotNames = getWalkerResult(t, "../...", exclude)
+	gotNames := getWalkerResult(t, "../...", exclude)
 
 	if len(gotNames) == 0 {
 		t.Fatal("got no names")
@@ -74,9 +74,9 @@ func TestWalkerErrors(t *testing.T) {
 }
 
 func testWalkerError(t *testing.T, path string) {
-	var fset = token.NewFileSet()
+	fset := token.NewFileSet()
 
-	var w, err = walker.NewWalker(fset, []string{})
+	w, err := walker.NewWalker(fset, []string{})
 	if err != nil {
 		t.Fatalf("err: %s", err)
 	}
@@ -87,9 +87,9 @@ func testWalkerError(t *testing.T, path string) {
 }
 
 func getWalkerResult(t *testing.T, path string, exclude []string) (gotNames map[string]struct{}) {
-	var fset = token.NewFileSet()
+	fset := token.NewFileSet()
 
-	var w, err = walker.NewWalker(fset, exclude)
+	w, err := walker.NewWalker(fset, exclude)
 	if err != nil {
 		t.Fatalf("err: %s", err)
 	}

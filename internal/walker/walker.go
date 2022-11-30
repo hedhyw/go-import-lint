@@ -16,8 +16,10 @@ import (
 	"github.com/hedhyw/go-import-lint/internal/model"
 )
 
-const filesChSize = 1024
-const extGo = ".go"
+const (
+	filesChSize = 1024
+	extGo       = ".go"
+)
 
 type walker struct {
 	fset    *token.FileSet

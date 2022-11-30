@@ -30,7 +30,7 @@ func NewCommentNode(
 	fset *token.FileSet,
 	comment *ast.Comment,
 ) (n Node) {
-	var position = fset.Position(comment.Pos())
+	position := fset.Position(comment.Pos())
 	return Node{
 		Kind:     KindComment,
 		Value:    comment.Text,
@@ -53,6 +53,8 @@ func NewImportNode(
 		}
 	case spec.Name != nil && spec.Name.Name == "_":
 		kind = KindImportUnused
+	case spec.Path.Value == `"C"`:
+		kind = KindImportC
 	case !strings.Contains(spec.Path.Value, "."):
 		kind = KindImportSTD
 	case strings.Contains(spec.Path.Value, pkg+"/"), pkg == spec.Path.Value:
@@ -61,7 +63,7 @@ func NewImportNode(
 		kind = KindImportVendor
 	}
 
-	var position = fset.Position(spec.Pos())
+	position := fset.Position(spec.Pos())
 
 	return Node{
 		Kind:     kind,
@@ -88,4 +90,7 @@ const (
 	KindComment
 	// KindImportUnused is an unused package. For example SQL driver.
 	KindImportUnused
+	// KindImportC is a "C" package.
+	// More details: https://pkg.go.dev/cmd/cgo.
+	KindImportC
 )

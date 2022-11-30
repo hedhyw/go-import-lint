@@ -21,7 +21,7 @@ type errorsSet struct {
 
 // Error implements error interface.
 func (err errorsSet) Error() string {
-	var errValues = make([]string, 0, len(err.errs))
+	errValues := make([]string, 0, len(err.errs))
 
 	for _, e := range err.errs {
 		errValues = append(errValues, e.Error())
@@ -33,7 +33,7 @@ func (err errorsSet) Error() string {
 // NewErrorSet creates error that handles many errors. It skips all nil
 // errors.
 func NewErrorSet(errs ...error) (err error) {
-	var actualErrs = make([]error, 0, len(errs))
+	actualErrs := make([]error, 0, len(errs))
 
 	for _, err = range errs {
 		if err == nil {
@@ -67,7 +67,7 @@ func (err importOrderError) Error() string {
 
 // NewImportOrderError creates new error about invalid import order.
 func NewImportOrderError(n Node, reason Reason) error {
-	var value, err = strconv.Unquote(n.Value)
+	value, err := strconv.Unquote(n.Value)
 	if err != nil {
 		value = n.Value
 	}

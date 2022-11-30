@@ -40,10 +40,10 @@ func (l fileInspector) Inspect() (errs []error) {
 	ast.Inspect(l.file, func(n ast.Node) bool {
 		switch node := n.(type) {
 		case *ast.ImportSpec:
-			var n = model.NewImportNode(l.fset, node, l.pkg)
+			n := model.NewImportNode(l.fset, node, l.pkg)
 			nodes = append(nodes, n)
 		case *ast.Comment:
-			var n = model.NewCommentNode(l.fset, node)
+			n := model.NewCommentNode(l.fset, node)
 			nodes = append(nodes, n)
 		}
 
@@ -64,7 +64,7 @@ func shouldSkip(comments []*ast.CommentGroup) (skip bool) {
 			continue
 		}
 
-		var comment = strings.TrimSpace(c.Text())
+		comment := strings.TrimSpace(c.Text())
 
 		switch {
 		case strings.HasPrefix(comment, prefixGeneratedComment):
@@ -101,7 +101,7 @@ func (l fileInspector) analyseImports(nodes []model.Node) (errs []error) {
 			continue
 		}
 
-		var prev = nodes[i-1]
+		prev := nodes[i-1]
 		if err = l.checkRules(cur, prev); err != nil {
 			errs = append(errs, err)
 		}
@@ -111,7 +111,7 @@ func (l fileInspector) analyseImports(nodes []model.Node) (errs []error) {
 }
 
 func (l *fileInspector) checkRules(cur model.Node, prev model.Node) error {
-	var lineDiff = cur.Index() - prev.Index()
+	lineDiff := cur.Index() - prev.Index()
 	if prev.Kind == cur.Kind {
 		if lineDiff > 1 {
 			return model.NewImportOrderError(cur, model.ReasonExtraLine)
