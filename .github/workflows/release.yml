@@ -1,4 +1,4 @@
-name: release-go-import-lint
+name: release
 
 on:
   push:
