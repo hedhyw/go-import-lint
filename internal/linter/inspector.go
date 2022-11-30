@@ -126,7 +126,10 @@ func (l *fileInspector) checkRules(cur model.Node, prev model.Node) error {
 	case 2:
 		// OK. Go on.
 	default:
-		return model.NewImportOrderError(cur, model.ReasonTooManyLines)
+		// Import "C" is exceptional, because it should be in separate block.
+		if cur.Kind != model.KindImportC && prev.Kind != model.KindImportC {
+			return model.NewImportOrderError(cur, model.ReasonTooManyLines)
+		}
 	}
 
 	return nil
