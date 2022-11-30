@@ -55,23 +55,23 @@ func newFlags() (f *flags) {
 }
 
 func main() {
-	var flagArgs = newFlags()
+	flagArgs := newFlags()
 	flag.Parse()
 
 	os.Exit(run(flagArgs))
 }
 
 func run(flagArgs *flags) (code int) {
-	var fset = token.NewFileSet()
+	fset := token.NewFileSet()
 
-	var walker, err = walker.NewWalker(fset, flagArgs.Exclude.values)
+	walker, err := walker.NewWalker(fset, flagArgs.Exclude.values)
 	if err != nil {
 		fmt.Printf("creating walker: %s\n", err)
 		return 1
 	}
 
 	if flagArgs.Package == "" {
-		var p = gomod.NewPackager()
+		p := gomod.NewPackager()
 		flagArgs.Package, err = p.Package(flagArgs.Paths.values)
 		if err != nil {
 			fmt.Printf("getting package: %s\n", err)
@@ -79,7 +79,7 @@ func run(flagArgs *flags) (code int) {
 		}
 	}
 
-	var walkerErr = make(chan error, 1)
+	walkerErr := make(chan error, 1)
 	go func() {
 		defer walker.Close()
 		for _, p := range flagArgs.Paths.values {
@@ -87,14 +87,14 @@ func run(flagArgs *flags) (code int) {
 		}
 	}()
 
-	var linterGotErr = make(chan bool, 1)
+	linterGotErr := make(chan bool, 1)
 	go func() {
 		var gotErr bool
 		defer func() { linterGotErr <- gotErr }()
 
-		var linter = linter.NewLinter(flagArgs.Package)
+		linter := linter.NewLinter(flagArgs.Package)
 		for f := range walker.Files() {
-			var errs = linter.Lint(fset, f)
+			errs := linter.Lint(fset, f)
 			for _, err := range errs {
 				gotErr = true
 				fmt.Println(err)
@@ -106,7 +106,7 @@ func run(flagArgs *flags) (code int) {
 		return 1
 	}
 
-	var werr = <-walkerErr
+	werr := <-walkerErr
 	if werr != nil {
 		return 1
 	}

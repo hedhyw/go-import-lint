@@ -9,8 +9,8 @@ import (
 const expPkg = "github.com/hedhyw/go-import-lint"
 
 func TestGoModScanner(t *testing.T) {
-	var p = NewPackager()
-	var gotPkg, err = p.Package([]string{"../.."})
+	p := NewPackager()
+	gotPkg, err := p.Package([]string{"../.."})
 	if err != nil {
 		t.Fatalf("err: %s", err)
 	}
@@ -20,8 +20,8 @@ func TestGoModScanner(t *testing.T) {
 }
 
 func TestGoModScannerGoModNotFound(t *testing.T) {
-	var p = NewPackager()
-	var _, err = p.Package(nil)
+	p := NewPackager()
+	_, err := p.Package(nil)
 	if !errors.Is(err, errPackageUnknown) {
 		t.Fatalf("err: exp %s, got: %s", errPackageUnknown, err)
 	}
@@ -34,7 +34,7 @@ module github.com/hedhyw/go-import-lint
 go 1.15
 	`
 
-	var gotPkg, err = scanForModule(strings.NewReader(content))
+	gotPkg, err := scanForModule(strings.NewReader(content))
 	if err != nil {
 		t.Fatalf("err: %s", err)
 	}
@@ -58,7 +58,7 @@ go 1.15
 }
 
 func testScanUnknown(t *testing.T, content string) {
-	var _, err = scanForModule(strings.NewReader(content))
+	_, err := scanForModule(strings.NewReader(content))
 	if !errors.Is(err, errPackageUnknown) {
 		t.Fatalf("err: exp %s, got: %s", errPackageUnknown, err)
 	}

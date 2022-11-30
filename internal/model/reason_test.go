@@ -7,30 +7,36 @@ import (
 )
 
 func TestReasonFromError(t *testing.T) {
-	t.Run("import_order_error", func(tt *testing.T) {
-		const expReason = model.ReasonExtraLine
-		var err = model.NewImportOrderError(model.Node{}, expReason)
+	t.Run("import_order_error", func(t *testing.T) {
+		t.Parallel()
 
-		var gotReason = model.ReasonFromError(err)
+		const expReason = model.ReasonExtraLine
+		err := model.NewImportOrderError(model.Node{}, expReason)
+
+		gotReason := model.ReasonFromError(err)
 		if gotReason != expReason {
 			t.Fatalf("reason: got %s, exp %s", gotReason, expReason)
 		}
 	})
 
-	t.Run("nil", func(tt *testing.T) {
+	t.Run("nil", func(t *testing.T) {
+		t.Parallel()
+
 		const expReason = model.ReasonUnknown
 
-		var gotReason = model.ReasonFromError(nil)
+		gotReason := model.ReasonFromError(nil)
 		if gotReason != expReason {
 			t.Fatalf("reason: got %s, exp %s", gotReason, expReason)
 		}
 	})
 
-	t.Run("other error", func(tt *testing.T) {
+	t.Run("other error", func(t *testing.T) {
+		t.Parallel()
+
 		const expReason = model.ReasonUnknown
 		const err model.Error = "test error"
 
-		var gotReason = model.ReasonFromError(err)
+		gotReason := model.ReasonFromError(err)
 		if gotReason != expReason {
 			t.Fatalf("reason: got %s, exp %s", gotReason, expReason)
 		}

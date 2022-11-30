@@ -26,7 +26,8 @@ lint: bin/golangci-lint
 .PHONY: lint
 
 test.coverage:
-	go test -covermode=count -coverprofile=coverage.out ./...
+	go test -covermode=count -coverprofile=coverage.out -coverpkg=./... ./...
+	go tool cover -func=coverage.out
 .PHONY: test.coverage
 
 test:

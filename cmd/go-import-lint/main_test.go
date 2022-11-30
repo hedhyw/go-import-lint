@@ -7,17 +7,17 @@ import (
 )
 
 func TestStringsFlag(t *testing.T) {
-	var expValues = []string{"1", "1"}
+	expValues := []string{"1", "1"}
 
-	var f = stringsFlag{
+	f := stringsFlag{
 		values:    []string{"default"},
 		isInitial: true,
 	}
 
-	var fs = flag.NewFlagSet("testset", flag.PanicOnError)
+	fs := flag.NewFlagSet("testset", flag.PanicOnError)
 	fs.Var(&f, "test", "")
 
-	var err = fs.Parse([]string{"-test", "1", "-test", "1"})
+	err := fs.Parse([]string{"-test", "1", "-test", "1"})
 	if err != nil {
 		t.Fatalf("err: %s", err)
 	}
@@ -28,14 +28,14 @@ func TestStringsFlag(t *testing.T) {
 }
 
 func TestMain(t *testing.T) {
-	var flags = newFlags()
+	flags := newFlags()
 
-	var err = flags.Paths.Set("../../...")
+	err := flags.Paths.Set("../../...")
 	if err != nil {
 		t.Fatalf("err: %s", err)
 	}
 
-	var code = run(flags)
+	code := run(flags)
 	if code != 0 {
 		t.Fatalf("code: exp 0, got: %d", code)
 	}
