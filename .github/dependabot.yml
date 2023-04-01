@@ -6,6 +6,6 @@ updates:
     schedule:
       interval: "monthly"
     commit-message:
-      prefix: "gha"
+      prefix: "chore(gha)"
     pull-request-branch-name:
       separator: "/"
