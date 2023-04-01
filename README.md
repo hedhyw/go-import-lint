@@ -1,7 +1,7 @@
 # go-import-lint
 
 ![Version](https://img.shields.io/github/v/tag/hedhyw/go-import-lint)
-[![Build Status](https://travis-ci.org/hedhyw/go-import-lint.svg?branch=master)](https://travis-ci.org/hedhyw/go-import-lint)
+![Build Status](https://github.com/hedhyw/go-import-lint/actions/workflows/check.yml/badge.svg)
 [![Go Report Card](https://goreportcard.com/badge/github.com/hedhyw/go-import-lint)](https://goreportcard.com/report/github.com/hedhyw/go-import-lint)
 [![Coverage Status](https://coveralls.io/repos/github/hedhyw/go-import-lint/badge.svg?branch=master)](https://coveralls.io/github/hedhyw/go-import-lint?branch=master)
 
